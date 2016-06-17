@@ -31,15 +31,19 @@ def simpleOrderFeat(order_file, distinct_map_file, outfile):
                 answer_flag = 0
             else:
                 answer_flag = 1
-            try:
-                fout.write('%d\t%d\t%d\t%s\t%s\n' % (answer_flag, distinct_id[items[3]], distinct_id[items[4]], items[5], timeMapping(items[6])))
-            except:
-                except_order_no += 1
+            if items[4] not in distinct_id:
+                fout.write('%d\t%d\t%d\t%s\t%s\n' % (answer_flag, distinct_id[items[3]], -1, items[5], timeMapping(items[6])))
+            else:
+                try:
+                    fout.write('%d\t%d\t%d\t%s\t%s\n' % (answer_flag, distinct_id[items[3]], distinct_id[items[4]], items[5], timeMapping(items[6])))
+                except:
+                    except_order_no += 1
             line_no += 1
             sys.stdout.write('Processing: %d\r' % line_no)
     print
     fout.close()
     print except_order_no
+
 
 if __name__ == '__main__':
     simpleOrderFeat(sys.argv[1], sys.argv[2], sys.argv[3])

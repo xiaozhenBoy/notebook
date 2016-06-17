@@ -1,0 +1,126 @@
+In [2]: import numpy as np
+
+In [3]: import sklearn
+
+In [4]: train_x = np.loadtxt('train/all.feats.txt')
+
+In [5]: x = train_x[:, 1:]
+
+In [6]: y = train_x[:, 0]
+
+In [7]: import random
+
+In [8]: idxs = range(170685)
+
+In [9]: random.shuffle(idxs)
+
+In [10]: test_idx = random.sample(idxs, int(170685*0.05))
+
+In [11]: train_idx = list(set(idxs) - set(test_idx))
+
+In [12]: from sklearn.ensemble import RandomForestRegressor
+
+In [13]: regtool = RandomForestRegressor(n_estimators=100, max_depth=10)
+
+In [14]: regtool.fit(x[train_idx], y[train_idx])
+Out[14]: 
+RandomForestRegressor(bootstrap=True, criterion='mse', max_depth=10,
+           max_features='auto', max_leaf_nodes=None, min_samples_leaf=1,
+           min_samples_split=2, min_weight_fraction_leaf=0.0,
+           n_estimators=100, n_jobs=1, oob_score=False, random_state=None,
+           verbose=0, warm_start=False)
+
+In [15]: test_y_pre = regtool.predict(x[test_idx])
+
+In [19]: sum_g = 0.
+
+In [20]: for idx, g in enumerate(y[test_idx]):
+   ....:     if g > 0.:
+   ....:         sum_g += abs(g-test_y_pre[idx])/g
+   ....:         
+
+In [21]: sum_g
+Out[21]: 4432.9944148940504
+
+
+In [25]: for g in y[test_idx]:
+    if g > 0.:
+        num += 1
+   ....:         
+
+In [26]: num
+Out[26]: 3883
+
+In [27]: sum_g / n
+%notebook  next       not        np         num        
+
+In [27]: sum_g / num
+Out[27]: 1.1416416211419136
+
+
+In [1]: import numpy as np
+
+In [2]: import sklearn
+
+In [3]: feats = np.loadtxt('all.feats.new.txt')
+
+In [4]: x = train_x[:, 2:]
+---------------------------------------------------------------------------
+NameError                                 Traceback (most recent call last)
+<ipython-input-4-e39252409d6e> in <module>()
+----> 1 x = train_x[:, 2:]
+
+NameError: name 'train_x' is not defined
+
+In [5]: x = feats[:, 2:]
+
+In [6]: y = feats[:, 0]
+
+In [7]: import random
+
+In [8]: idxs = range(feats.shape[0])
+
+In [9]: random.shuffle(idxs)
+
+In [10]: test_idx = random.sample(idxs, int(170685*0.05))
+
+In [11]: train_idx = list(set(idxs) - set(test_idx))
+
+In [12]: from sklearn.ensemble import RandomForestRegressor
+
+In [13]: regtool = RandomForestRegressor(n_estimators=100, max_depth=10)
+
+In [14]: regtool.fit(x[train_idx], y[train_idx])
+Out[14]: 
+RandomForestRegressor(bootstrap=True, criterion='mse', max_depth=10,
+           max_features='auto', max_leaf_nodes=None, min_samples_leaf=1,
+           min_samples_split=2, min_weight_fraction_leaf=0.0,
+           n_estimators=100, n_jobs=1, oob_score=False, random_state=None,
+           verbose=0, warm_start=False)
+
+In [15]: test_y_pre = regtool.predict(x[test_idx])
+
+In [16]: sum_g = 0.
+
+In [17]: for idx, g in enumerate(y[test_idx]):
+   ....:     if g > 0.:
+   ....:         sum_g += abs(g-test_y_pre[idx])/g
+   ....:         
+
+In [18]: sum_g
+Out[18]: 2851.3332081405943
+
+In [19]: num = 0
+
+In [20]: for g in y[test_idx]:
+   ....:     if g > 0.:
+   ....:         num += 1
+   ....:         
+
+In [21]: num
+Out[21]: 4340
+
+In [22]: sum_g/num
+Out[22]: 0.65698921846557468
+
+
